@@ -5,8 +5,9 @@
 </head>
 <body>
     <div id="app">
-        <!-- Дабавление компонента в шаблон -->
-        <my-component></my-component>
+        <!-- Дабавление компонента в шаблон 
+            text - литерал компонента-->
+        <my-component text="World"></my-component>
     </div>
     <script>
         // Регистрация глобального компонента Vue
@@ -15,7 +16,8 @@
         //Константа с объявление компонента
         const Component = { 
             // Отрисовка шаблона компоента my-component
-            template: '<div>Hello From Local Component</div>',
+            //Шаблон выводит переданный входной параметр text
+            template: '<div>Hello {{text}}!</div>',
             props: ['text']
         };
 

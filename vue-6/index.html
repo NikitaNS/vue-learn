@@ -9,14 +9,21 @@
         <my-component></my-component>
     </div>
     <script>
-        // Решистрация глобального компонента Vue
-        Vue.component('my-component', {
-            // Отрисовка шаблона компоента my-component 
-            template: '<div>HEllo From Component</div>'
-        });
+        // Регистрация глобального компонента Vue
+        //Vue.component('my-component', {})
 
+        //Константа с объявление компонента
+        const Component = { 
+            // Отрисовка шаблона компоента my-component
+            template: '<div>Hello From Local Component</div>',
+            props: ['text']
+        };
+
+        //Экземпляр vue
         new Vue ({
-            el: "#app"
+            el: "#app",
+            //Разделл опций с объявлением компонентов
+            components: {'my-component': Component}
         })
     </script>
 </body>

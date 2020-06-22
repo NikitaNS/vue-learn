@@ -6,26 +6,104 @@
 <body>
     <div id="app">
         <!-- Дабавление компонента в шаблон 
-            text - литерал компонента-->
-        <my-component text="World"></my-component>
+            text - литерал компонента
+            <my-component text="World"></my-component> -->
+        <!-- v-bind привязывает параметр text  к сообщению message, которое возвращается функцией 
+        <my-component v-bind:text="message"></my-component> -->
+        <!--  
+        Кнопки икремента
+        <my-component></my-component>
+        <my-component></my-component>
+        <my-component></my-component>
+        -->
+        
+        <my-component   :num="myNumber"     
+                        :str="passedString"
+                        :even="myNumber"    
+                        :obj="passedObject">
+        </my-component>
     </div>
     <script>
+        /*Глобальная константа счетчик counter, счетчика инкремируются синхронно
+        const counter = {counter: 0}*/
         // Регистрация глобального компонента Vue
         //Vue.component('my-component', {})
 
         //Константа с объявление компонента
         const Component = { 
-            // Отрисовка шаблона компоента my-component
-            //Шаблон выводит переданный входной параметр text
-            template: '<div>Hello {{text}}!</div>',
-            props: ['text']
+            /* Отрисовка шаблона компоента my-component
+            Шаблон выводит переданный входной параметр text
+            template: '<div>Hello {{text}}! {{tester1}} </div>',
+
+            //Счетчик инкремируется при каждом нажатии на кнопку
+            template: '<div><button v-on:click="counter += 1">{{counter}}<counter></div>',*/
+            template: '<div>Number: {{num}}<br />String: {{str}} <br />IsEven?: {{even}}<br/>Object: {{obj.message}}</div>',
+            /* Входные параметры
+            props: ['text'],*/
+
+            props: {
+                //Значение должно быть числом
+                num: {
+                    type: Number,
+                    required: true,
+                },
+                //Параметр принимает тольео строки и имеет значение по умолчанию
+                str: {
+                    type: String,
+                    default: "Hello World"
+                },
+                // Параметр принимает только объекты и содержит сообщение по умолчанию
+                obj: {
+                    typr: Object,
+                    default: ()=> {
+                        return {message: 'Hello from object'}
+                    }
+                },
+                // Пользовательский валидатор проверяет, являестя ли число четным
+                even: {
+                    validator: (value) => {
+                        return (value % 2 ===0)
+                    }
+                }
+            },
+
+            /*data() {
+                return {
+                    tester1: 'Testing Text'
+                }
+            }*/
+            /*data() {
+                //Функция данных возвращает глобальный счетчик, счетчик инкремируюется асинхронно
+                return {
+                    counter: 0
+                }
+            }*/
         };
 
         //Экземпляр vue
         new Vue ({
             el: "#app",
             //Разделл опций с объявлением компонентов
-            components: {'my-component': Component}
+            components: {'my-component': Component},
+           /* data() {
+                return {
+                    //Функция данных, возвращающая messsage
+                    message: 'From Parent Component'
+                }
+            }
+            data() {
+                return {
+                    message: ''
+                }
+            }*/
+            data() {
+                return {
+                    passedString: 'Hello Fron Parent!',
+                    myNumber: 43,
+                    passedObject: {message: 'Passed Object'}
+
+                }
+            }
         })
     </script>
 </body>
